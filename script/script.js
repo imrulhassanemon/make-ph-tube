@@ -53,9 +53,10 @@ const displayCatagory = async (data) => {
 
 // video catagory
 
-const getVideo = async () => {
+const getVideo = async (search = '') => {
+  console.log(search)
   const response = await fetch(
-    "https://openapi.programming-hero.com/api/phero-tube/videos"
+    `https://openapi.programming-hero.com/api/phero-tube/videos?title=${search}`
   );
   const data = await response.json();
   displayVideo(data.videos);
@@ -63,7 +64,7 @@ const getVideo = async () => {
 
 // details button 
 const detailsButton = async (videoId) =>{
-  console.log(videoId)
+  // console.log(videoId)
   const response = await fetch(`https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`)
   const data = await response.json()
   displayDetail(data.video)
@@ -77,7 +78,7 @@ const displayDetail = (detail) => {
   }'/>
   <p class="text-black" >'${detail.description}'<p/> 
   `
-  console.log(detail)
+  // console.log(detail)
   document.getElementById("clicked").click()
 }
 
@@ -144,6 +145,11 @@ const displayVideo = (video) => {
     videoContainer.append(card);
   });
 };
+
+document.getElementById("inputval").addEventListener("keyup", (e) => {
+  getVideo(e.target.value)
+})
+
 
 getVideo();
 catagory();
